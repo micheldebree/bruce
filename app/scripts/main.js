@@ -4,10 +4,11 @@ var canvas,
     context,
     body,
     animStart,
-    fps = 30, // desired frames-per-second to refresh the animation
+    fps = 50, // desired frames-per-second to refresh the animation
     delay = 1000 / fps,
     playhead,
-    now;
+    now,
+    frameCount = 0;
 
 function animate() {
     'use strict';
@@ -29,6 +30,9 @@ function animate() {
         window.requestAnimFrame(animate);
     }, delay);
     
+    frameCount++;
+    
+    document.getElementById("fps").innerHTML = Math.round(10000 * (frameCount / playhead)) / 10;
 }
 
 window.requestAnimFrame = (function () {
