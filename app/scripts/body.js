@@ -30,6 +30,8 @@ function Body(motionData) {
     this.imgLegLower = new Image();
     this.imgLegLower.src = "images/motion/lowerrightleg.png";
     
+    this.halfPi = Math.PI / 2;
+    
     
 }
 
@@ -80,22 +82,22 @@ Body.prototype.draw2 = function (context, playhead) {
     // 'playhead' to frame number
     var frame = Math.round(playhead * this.fpms) % this.motion.length;
 
+    this.drawJoint(context, this.imgLegUpper, this.motion[frame].HipRight, this.motion[frame].KneeRight);
+    this.drawJoint(context, this.imgLegUpper, this.motion[frame].HipLeft, this.motion[frame].KneeLeft);
+    this.drawJoint(context, this.imgLegLower, this.motion[frame].KneeRight, this.motion[frame].AnkleRight);
+    this.drawJoint(context, this.imgLegLower, this.motion[frame].KneeLeft, this.motion[frame].AnkleLeft);
+    this.drawJoint(context, this.imgTorsoLower, this.motion[frame].SpineMid, this.motion[frame].SpineBase);
+    this.drawJoint(context, this.imgTorsoUpper, this.motion[frame].SpineShoulder, this.motion[frame].SpineMid);
+  
     this.drawJoint(context, this.imgHead, this.motion[frame].Head, this.motion[frame].SpineShoulder);
     this.drawJoint(context, this.imgHandLeft, this.motion[frame].HandRight, this.motion[frame].HandTipRight);
     this.drawJoint(context, this.imgHandLeft, this.motion[frame].HandLeft, this.motion[frame].HandTipLeft);
     this.drawJoint(context, this.imgFootRight, this.motion[frame].AnkleRight, this.motion[frame].FootRight);
     this.drawJoint(context, this.imgFootLeft, this.motion[frame].AnkleLeft, this.motion[frame].FootLeft);
-    this.drawJoint(context, this.imgArmUpperLeft, this.motion[frame].ShoulderLeft, this.motion[frame].ElbowLeft);
-    this.drawJoint(context, this.imgArmUpperRight, this.motion[frame].ShoulderRight, this.motion[frame].ElbowRight);
     this.drawJoint(context, this.imgArmLowerRight, this.motion[frame].ElbowRight, this.motion[frame].HandRight);
     this.drawJoint(context, this.imgArmLowerLeft, this.motion[frame].ElbowLeft, this.motion[frame].HandLeft);
-    this.drawJoint(context, this.imgTorsoUpper, this.motion[frame].SpineShoulder, this.motion[frame].SpineMid);
-    this.drawJoint(context, this.imgTorsoLower, this.motion[frame].SpineMid, this.motion[frame].SpineBase);
-    this.drawJoint(context, this.imgLegUpper, this.motion[frame].HipRight, this.motion[frame].KneeRight);
-    this.drawJoint(context, this.imgLegUpper, this.motion[frame].HipLeft, this.motion[frame].KneeLeft);
-    this.drawJoint(context, this.imgLegLower, this.motion[frame].KneeRight, this.motion[frame].AnkleRight);
-    this.drawJoint(context, this.imgLegLower, this.motion[frame].KneeLeft, this.motion[frame].AnkleLeft);
-    
+    this.drawJoint(context, this.imgArmUpperLeft, this.motion[frame].ShoulderLeft, this.motion[frame].ElbowLeft);
+    this.drawJoint(context, this.imgArmUpperRight, this.motion[frame].ShoulderRight, this.motion[frame].ElbowRight);
 
 };
 
@@ -106,18 +108,12 @@ Body.prototype.drawJoint = function(context, img, fromp, top) {
         length = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)),
         zoom = length / img.height;
 
-    var halfw = img.width / 2.
-        halfh = img.height / 2;
-
-    context.beginPath();
-    context.moveTo(fromp[0], fromp[1]);
-    context.lineTo(top[0], top[1]);
-    context.stroke();
+    var halfw = img.width >> 1;
 
     context.save();
     
     context.translate(fromp[0], fromp[1]);
-    context.rotate(Math.PI/2 + Math.atan2(b, a));
+    context.rotate(this.halfPi + Math.atan2(b, a));
     context.scale(zoom, zoom);
     
     context.drawImage(img,  -halfw , 0 );
