@@ -24,7 +24,7 @@ function animate() {
     
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.strokeStyle = "#FFFFFF";
-    body.draw(context, playhead);
+    body.draw2(context, playhead);
     
     setTimeout(function () {
         window.requestAnimFrame(animate);
