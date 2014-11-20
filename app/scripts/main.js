@@ -23,7 +23,7 @@ function animate() {
     playhead = (now - animStart);
     
     context.clearRect(0, 0, canvas.width, canvas.height);
-    context.strokeStyle = "#FFFFFF";
+    context.strokeStyle = "#808080";
     body.draw2(playhead);
     
     setTimeout(function () {

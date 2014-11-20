@@ -79,8 +79,6 @@ Body.prototype.draw = function (playhead) {
 Body.prototype.draw2 = function (playhead) {
     'use strict';
 
-    //this.draw(context, playhead);
-
     // 'playhead' to frame number
     var frame = Math.round(playhead * this.fpms) % this.motion.length;
 
@@ -100,22 +98,21 @@ Body.prototype.draw2 = function (playhead) {
     this.drawJoint(this.imgArmLowerLeft, this.motion[frame].ElbowLeft, this.motion[frame].HandLeft);
     this.drawJoint(this.imgArmUpperLeft, this.motion[frame].ShoulderLeft, this.motion[frame].ElbowLeft);
     this.drawJoint(this.imgArmUpperRight, this.motion[frame].ShoulderRight, this.motion[frame].ElbowRight);
-
+    //this.draw(playhead);
 };
 
 Body.prototype.drawJoint = function (img, from, to) {
 
     var a = from[0] - to[0],
         b = from[1] - to[1],
-        zoom = Math.sqrt(a * a + b * b) / img.height,
+        zoom = Math.sqrt(a * a + b * b) / img.height * 1.1,
         halfw = img.width >> 1;
 
     this.context.save();
 
     this.context.translate(from[0], from[1]);
-    // TODO: rotate images by halfPi (90%) instead of adding here
     this.context.rotate(this.halfPi + Math.atan2(b, a));
-    this.context.scale(zoom, zoom);
+    this.context.scale(4, zoom);
     this.context.drawImage(img, -halfw, 0);
     
     this.context.restore();
