@@ -44,7 +44,7 @@ function Body(context, motionData, imagefolder) {
 }
 
 /* Draw the effect
-    animTime is the 'playhead' position in milliseconds */
+     'playhead' position in milliseconds */
 Body.prototype.draw2 = function (playhead) {
     'use strict';
 

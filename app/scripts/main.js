@@ -1,4 +1,4 @@
-/*global window, document, Body, motion */
+/*global window, document, Body, Scroller, motion */
 
 var canvas,
     context,
@@ -64,5 +64,6 @@ window.onload = function () {
     canvas = document.getElementById("Canvas0");
     context = canvas.getContext('2d');
     animations.push(new Body(context, motion, 'images/xray/'));
+    animations.push(new Scroller(context));
     animate();
 };
