@@ -1,27 +1,21 @@
-/*global window, document, Body, Scroller, motion */
+/*global window, document, Body, Scroller, Framerate, motion */
 
 var canvas,
     context,
-    body,
     animStart,
-    fps = 50, // desired frames-per-second to refresh the animation
-    delay = 1000 / fps,
     playhead,
-    now,
-    frameCount = 0,
     animations = [];
 
-function animate() {
+function animate(timestamp) {
     'use strict';
 
-    now = Date.now();
-
     // determine the 'playhead': the number of milliseconds the animation
-    // has been playing
+    // has been playing. Use this for timing effects since the Draw function
+    // is called at the frequency of the refresh rate of the browser.
     if (undefined === animStart) {
-        animStart = now;
+        animStart = timestamp;
     }
-    playhead = (now - animStart);
+    playhead = (timestamp - animStart);
 
     context.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -29,22 +23,7 @@ function animate() {
         animations[i].draw(playhead);
     }
     
-    //recolor
-    //var data = context.getImageData(0, 0, canvas.width, canvas.height);
-    //for (var i = 0, length = data.data.length; i < length; i += 4) {
-        //data.data[i]     = Math.max(255, data.data[i]);
-        //data.data[i + 1] = Math.max(255, data.data[i]);
-        //data.data[i + 2] = Math.max(255, data.data[i]);
-    //}
-    //context.putImageData(data, 0, 0);
-
-    setTimeout(function () {
-        window.requestAnimFrame(animate);
-    }, delay);
-
-    frameCount++;
-
-    document.getElementById("fps").innerHTML = Math.round(10000 * (frameCount / playhead)) / 10;
+    window.requestAnimFrame(animate);
 }
 
 window.requestAnimFrame = (function () {
@@ -55,7 +34,7 @@ window.requestAnimFrame = (function () {
         window.oRequestAnimationFrame ||
         window.msRequestAnimationFrame ||
         function (callback) {
-            window.setTimeout(callback, 1000 / 2 * fps);
+            window.setTimeout(callback, 1000 / 120);
         };
 }());
 
@@ -65,5 +44,6 @@ window.onload = function () {
     context = canvas.getContext('2d');
     animations.push(new Body(context, motion, 'images/xray/'));
     animations.push(new Scroller(context));
-    animate();
+    animations.push(new Framerate(context));
+    window.requestAnimFrame(animate);
 };
