@@ -1,9 +1,7 @@
-/*global window, document, Body, Scroller, Framerate, motion */
+/*global window, document, Body, Scroller, Framerate, Rasterbar, motion */
 
-var canvas,
-    context,
+var context,
     animStart,
-    playhead,
     animations = [];
 
 function animate(timestamp) {
@@ -15,12 +13,11 @@ function animate(timestamp) {
     if (undefined === animStart) {
         animStart = timestamp;
     }
-    playhead = (timestamp - animStart);
 
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     
     for (var i = 0; i < animations.length; i++) {
-        animations[i].draw(playhead);
+        animations[i].draw(timestamp - animStart);
     }
     
     window.requestAnimFrame(animate);
@@ -40,10 +37,11 @@ window.requestAnimFrame = (function () {
 
 window.onload = function () {
     'use strict';
-    canvas = document.getElementById("Canvas0");
+    var canvas = document.getElementById("Canvas0");
     context = canvas.getContext('2d');
     animations.push(new Body(context, motion, 'images/xray/'));
     animations.push(new Scroller(context));
+    animations.push(new Rasterbars(context));
     animations.push(new Framerate(context));
     window.requestAnimFrame(animate);
 };
