@@ -1,20 +1,23 @@
+/* jslint bitwise: true */
+/* exported C64Palette */
 function C64Palette() {
-    this.Black = "#000000";
-    this.White = "#FFFFFF";
-    this.Red = "#68372B";
-    this.Cyan = "#70A4B2";
-    this.Purple = "#6F3D86";
-    this.Green = "#588D43";
-    this.Blue = "#352879";
-    this.Yellow = "#B8C76F";
-    this.LightBrown = "#6F4F25";
-    this.Brown = "#433900";
-    this.LightRed = "#9A6759";
-    this.DarkGray = "#444444";
-    this.Gray = "#6C6C6C";
-    this.LightGreen = "#9AD284";
-    this.LightBlue = "#6C5EB5";
-    this.LightGray = "#959595";
+    'use strict';
+    this.Black = '#000000';
+    this.White = '#FFFFFF';
+    this.Red = '#68372B';
+    this.Cyan = '#70A4B2';
+    this.Purple = '#6F3D86';
+    this.Green = '#588D43';
+    this.Blue = '#352879';
+    this.Yellow = '#B8C76F';
+    this.LightBrown = '#6F4F25';
+    this.Brown = '#433900';
+    this.LightRed = '#9A6759';
+    this.DarkGray = '#444444';
+    this.Gray = '#6C6C6C';
+    this.LightGreen = '#9AD284';
+    this.LightBlue = '#6C5EB5';
+    this.LightGray = '#959595';
  
     this.Random = function () {
         var r = ~~((Math.random() * 16) + 1);
@@ -36,5 +39,5 @@ function C64Palette() {
             case 15: return this.White;
             case 16: return this.Yellow;
         }
-    }
+    };
 }

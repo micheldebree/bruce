@@ -1,5 +1,8 @@
-body {
-  background: black;
-  color: white;
-}
-
+ @font-face {
+     font-family: 'CommodoreServer';
+     src: url('CommodoreServer.ttf');
+ }
+ body {
+     background: black;
+     color: white;
+ }

@@ -1,3 +1,4 @@
+/* jslint bitwise: true */
 function Body(context, motionData, imagefolder) {
     'use strict';
 
@@ -5,37 +6,37 @@ function Body(context, motionData, imagefolder) {
     this.motion = motionData;
     this.fpms = 30 / 1000; // absolute speed of animation, in frames per millisecond, regardless of refresh rate
     this.halfPi = Math.PI / 2;
- 
+
     this.imgHead = new Image();
-    this.imgHead.src = imagefolder + "head.png";
+    this.imgHead.src = imagefolder + 'head.png';
     this.imgHandRight = new Image();
-    this.imgHandRight.src = imagefolder + "righthand.png";
+    this.imgHandRight.src = imagefolder + 'righthand.png';
     this.imgHandLeft = new Image();
-    this.imgHandLeft.src = imagefolder + "lefthand.png";
+    this.imgHandLeft.src = imagefolder + 'lefthand.png';
     this.imgFootRight = new Image();
-    this.imgFootRight.src = imagefolder + "rightfoot.png";
+    this.imgFootRight.src = imagefolder + 'rightfoot.png';
     this.imgFootLeft = new Image();
-    this.imgFootLeft.src = imagefolder + "leftfoot.png";
+    this.imgFootLeft.src = imagefolder + 'leftfoot.png';
     this.imgArmUpperLeft = new Image();
-    this.imgArmUpperLeft.src = imagefolder + "leftupperarm.png";
+    this.imgArmUpperLeft.src = imagefolder + 'leftupperarm.png';
     this.imgArmUpperRight = new Image();
-    this.imgArmUpperRight.src = imagefolder + "rightupperarm.png";
+    this.imgArmUpperRight.src = imagefolder + 'rightupperarm.png';
     this.imgArmLowerLeft = new Image();
-    this.imgArmLowerLeft.src = imagefolder + "leftlowerarm.png";
+    this.imgArmLowerLeft.src = imagefolder + 'leftlowerarm.png';
     this.imgArmLowerRight = new Image();
-    this.imgArmLowerRight.src = imagefolder + "rightlowerarm.png";
+    this.imgArmLowerRight.src = imagefolder + 'rightlowerarm.png';
     this.imgTorsoUpper = new Image();
-    this.imgTorsoUpper.src = imagefolder + "uppertorso.png";
+    this.imgTorsoUpper.src = imagefolder + 'uppertorso.png';
     this.imgTorsoLower = new Image();
-    this.imgTorsoLower.src = imagefolder + "lowertorso.png";
+    this.imgTorsoLower.src = imagefolder + 'lowertorso.png';
     this.imgLegUpperLeft = new Image();
-    this.imgLegUpperLeft.src = imagefolder + "upperleftleg.png";
+    this.imgLegUpperLeft.src = imagefolder + 'upperleftleg.png';
     this.imgLegLowerLeft = new Image();
-    this.imgLegLowerLeft.src = imagefolder + "lowerleftleg.png";
+    this.imgLegLowerLeft.src = imagefolder + 'lowerleftleg.png';
     this.imgLegUpperRight = new Image();
-    this.imgLegUpperRight.src = imagefolder + "upperrightleg.png";
+    this.imgLegUpperRight.src = imagefolder + 'upperrightleg.png';
     this.imgLegLowerRight = new Image();
-    this.imgLegLowerRight.src = imagefolder + "lowerrightleg.png";
+    this.imgLegLowerRight.src = imagefolder + 'lowerrightleg.png';
 }
 
 /* Draw the effect
@@ -44,37 +45,37 @@ Body.prototype.draw2 = function (playhead) {
     'use strict';
 
     // 'playhead' to frame number
-    var frame = Math.round(playhead * this.fpms) % this.motion.length;
+    var frame = ~~ (playhead * this.fpms) % this.motion.length;
 
-    this.context.strokeStyle = "#808080";
+    this.context.strokeStyle = '#808080';
     this.context.beginPath();
-    this.context.moveTo(this.motion[this.frame].Head[0], this.motion[frame].Head[1]);
-    this.context.lineTo(this.motion[this.frame].Neck[0], this.motion[frame].Neck[1]);
-    this.context.lineTo(this.motion[this.frame].SpineShoulder[0], this.motion[frame].SpineShoulder[1]);
-    this.context.lineTo(this.motion[this.frame].SpineMid[0], this.motion[frame].SpineMid[1]);
-    this.context.lineTo(this.motion[this.frame].SpineBase[0], this.motion[frame].SpineBase[1]);
-    this.context.lineTo(this.motion[this.frame].HipRight[0], this.motion[frame].HipRight[1]);
-    this.context.lineTo(this.motion[this.frame].KneeRight[0], this.motion[frame].KneeRight[1]);
-    this.context.lineTo(this.motion[this.frame].AnkleRight[0], this.motion[frame].AnkleRight[1]);
-    this.context.lineTo(this.motion[this.frame].FootRight[0], this.motion[frame].FootRight[1]);
-    this.context.moveTo(this.motion[this.frame].HandTipLeft[0], this.motion[frame].HandTipLeft[1]);
-    this.context.lineTo(this.motion[this.frame].HandLeft[0], this.motion[frame].HandLeft[1]);
-    this.context.lineTo(this.motion[this.frame].ThumbLeft[0], this.motion[frame].ThumbLeft[1]);
-    this.context.moveTo(this.motion[this.frame].HandLeft[0], this.motion[frame].HandLeft[1]);
-    this.context.lineTo(this.motion[this.frame].ElbowLeft[0], this.motion[frame].ElbowLeft[1]);
-    this.context.lineTo(this.motion[this.frame].ShoulderLeft[0], this.motion[frame].ShoulderLeft[1]);
-    this.context.lineTo(this.motion[this.frame].SpineShoulder[0], this.motion[frame].SpineShoulder[1]);
-    this.context.lineTo(this.motion[this.frame].ShoulderRight[0], this.motion[frame].ShoulderRight[1]);
-    this.context.lineTo(this.motion[this.frame].ElbowRight[0], this.motion[frame].ElbowRight[1]);
-    this.context.lineTo(this.motion[this.frame].HandRight[0], this.motion[frame].HandRight[1]);
-    this.context.lineTo(this.motion[this.frame].HandTipRight[0], this.motion[frame].HandTipRight[1]);
-    this.context.moveTo(this.motion[this.frame].HandRight[0], this.motion[frame].HandRight[1]);
-    this.context.lineTo(this.motion[this.frame].ThumbRight[0], this.motion[frame].ThumbRight[1]);
-    this.context.moveTo(this.motion[this.frame].SpineBase[0], this.motion[frame].SpineBase[1]);
-    this.context.lineTo(this.motion[this.frame].HipLeft[0], this.motion[frame].HipLeft[1]);
-    this.context.lineTo(this.motion[this.frame].KneeLeft[0], this.motion[frame].KneeLeft[1]);
-    this.context.lineTo(this.motion[this.frame].AnkleLeft[0], this.motion[frame].AnkleLeft[1]);
-    this.context.lineTo(this.motion[this.frame].FootLeft[0], this.motion[frame].FootLeft[1]);
+    this.context.moveTo(this.motion[frame].Head[0], this.motion[frame].Head[1]);
+    this.context.lineTo(this.motion[frame].Neck[0], this.motion[frame].Neck[1]);
+    this.context.lineTo(this.motion[frame].SpineShoulder[0], this.motion[frame].SpineShoulder[1]);
+    this.context.lineTo(this.motion[frame].SpineMid[0], this.motion[frame].SpineMid[1]);
+    this.context.lineTo(this.motion[frame].SpineBase[0], this.motion[frame].SpineBase[1]);
+    this.context.lineTo(this.motion[frame].HipRight[0], this.motion[frame].HipRight[1]);
+    this.context.lineTo(this.motion[frame].KneeRight[0], this.motion[frame].KneeRight[1]);
+    this.context.lineTo(this.motion[frame].AnkleRight[0], this.motion[frame].AnkleRight[1]);
+    this.context.lineTo(this.motion[frame].FootRight[0], this.motion[frame].FootRight[1]);
+    this.context.moveTo(this.motion[frame].HandTipLeft[0], this.motion[frame].HandTipLeft[1]);
+    this.context.lineTo(this.motion[frame].HandLeft[0], this.motion[frame].HandLeft[1]);
+    this.context.lineTo(this.motion[frame].ThumbLeft[0], this.motion[frame].ThumbLeft[1]);
+    this.context.moveTo(this.motion[frame].HandLeft[0], this.motion[frame].HandLeft[1]);
+    this.context.lineTo(this.motion[frame].ElbowLeft[0], this.motion[frame].ElbowLeft[1]);
+    this.context.lineTo(this.motion[frame].ShoulderLeft[0], this.motion[frame].ShoulderLeft[1]);
+    this.context.lineTo(this.motion[frame].SpineShoulder[0], this.motion[frame].SpineShoulder[1]);
+    this.context.lineTo(this.motion[frame].ShoulderRight[0], this.motion[frame].ShoulderRight[1]);
+    this.context.lineTo(this.motion[frame].ElbowRight[0], this.motion[frame].ElbowRight[1]);
+    this.context.lineTo(this.motion[frame].HandRight[0], this.motion[frame].HandRight[1]);
+    this.context.lineTo(this.motion[frame].HandTipRight[0], this.motion[frame].HandTipRight[1]);
+    this.context.moveTo(this.motion[frame].HandRight[0], this.motion[frame].HandRight[1]);
+    this.context.lineTo(this.motion[frame].ThumbRight[0], this.motion[frame].ThumbRight[1]);
+    this.context.moveTo(this.motion[frame].SpineBase[0], this.motion[frame].SpineBase[1]);
+    this.context.lineTo(this.motion[frame].HipLeft[0], this.motion[frame].HipLeft[1]);
+    this.context.lineTo(this.motion[frame].KneeLeft[0], this.motion[frame].KneeLeft[1]);
+    this.context.lineTo(this.motion[frame].AnkleLeft[0], this.motion[frame].AnkleLeft[1]);
+    this.context.lineTo(this.motion[frame].FootLeft[0], this.motion[frame].FootLeft[1]);
     this.context.stroke();
 };
 
@@ -82,8 +83,12 @@ Body.prototype.draw = function (playhead) {
     'use strict';
 
     // playhead to frame number
-    var frame = ~~(playhead * this.fpms) % this.motion.length;
+    var frame = ~~ (playhead * this.fpms) % this.motion.length;
 
+
+    this.context.save();
+    this.context.translate(this.context.canvas.width / 4, 0);
+    this.context.scale(this.context.canvas.height / 500, this.context.canvas.height / 500);
     this.drawJoint(this.imgLegUpperRight, this.motion[frame].HipRight, this.motion[frame].KneeRight);
     this.drawJoint(this.imgLegUpperLeft, this.motion[frame].HipLeft, this.motion[frame].KneeLeft);
     this.drawJoint(this.imgLegLowerRight, this.motion[frame].KneeRight, this.motion[frame].AnkleRight);
@@ -99,10 +104,11 @@ Body.prototype.draw = function (playhead) {
     this.drawJoint(this.imgArmUpperRight, this.motion[frame].ShoulderRight, this.motion[frame].ElbowRight);
     this.drawJoint(this.imgArmLowerRight, this.motion[frame].ElbowRight, this.motion[frame].HandRight);
     this.drawJoint(this.imgArmLowerLeft, this.motion[frame].ElbowLeft, this.motion[frame].HandLeft);
+    this.context.restore();
 };
 
 Body.prototype.drawJoint = function (img, from, to) {
-
+    'use strict';
     var a = from[0] - to[0],
         b = from[1] - to[1],
         zoom = Math.sqrt(a * a + b * b) / img.height * 1,
