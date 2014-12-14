@@ -1,4 +1,4 @@
-/* global window, document, Body, Scroller, Framerate, Rasterbars, C64, motion */
+/* global window, document, Body, Scroller, Framerate, Stretcher, Rasterbars, C64, motion */
 
 var context,
     zoomX,
@@ -15,16 +15,12 @@ function animate(timestamp) {
         animStart = timestamp;
     }
 
-    //context.save();
-    //context.scale(zoomX, zoomX);
     context.fillStyle = '#ff0000';
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
     for (var i = 0; i < animations.length; i++) {
         animations[i].draw(timestamp - animStart);
     }
-
-    //context.restore();
 
     window.requestAnimFrame(animate);
 }
@@ -49,12 +45,12 @@ window.onload = function () {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     context = canvas.getContext('2d');
-    //context.scale(zoomX, zoomX);
    
     animations.push(new C64(context));
-    animations.push(new Body(context, motion, 'images/xray/'));
+    //animations.push(new Body(context, motion, 'images/xray/'));
     animations.push(new Scroller(context));
-    animations.push(new Rasterbars(context));
-    animations.push(new Framerate(context));
+    //animations.push(new Rasterbars(context));
+    //animations.push(new Stretcher(context));
+    //animations.push(new Framerate(context));
     window.requestAnimFrame(animate);
 };

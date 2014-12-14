@@ -1,9 +1,12 @@
 /* jslint bitwise: true */
+/* global Font */
 function Scroller(context) {
     'use strict';
     this.context = context;
 
-    this.scrollText = 'Each of us has a vision of good and of evil. We have to encourage people to move towards what they think is good... Everyone has his own idea of good and evil and must choose to follow the good and fight evil as he conceives them. That would be enough to make the world a better place. - Pope Francis '.toUpperCase();
+    this.scrollText = 'Each of us has a vision of good and of evil. We have to encourage people to move towards what they think is good... Everyone has his own idea of good and evil and must choose to follow the good and fight evil as he conceives them. That would be enough to make the world a better place. - Pope Francis '.toLowerCase();
+
+    //this.scrollText= 'gggggggggggg';
 
     this.charWidth = context.canvas.width / 40;
     this.charsw = context.canvas.width / this.charWidth;
@@ -13,6 +16,7 @@ function Scroller(context) {
     this.amp = context.canvas.height / 4;
     this.yspeed = 0.005;
     this.sinfreq = 0.3;
+    this.font = new Font('images/fonts/aeg_collection_11.gif');
 }
 
 Scroller.prototype.draw = function (playhead) {
@@ -28,7 +32,8 @@ Scroller.prototype.draw = function (playhead) {
 
     for (i = 0; i < this.charsw; i++) {
         var y = this.middle + this.amp * Math.sin((rough + i) * this.sinfreq - phase);
-        this.context.fillText(this.scrollText[rough + i], i * this.charWidth - smooth, y);
+        //this.context.fillText(this.scrollText[rough + i], i * this.charWidth - smooth, y);
+        this.font.draw(this.context, this.scrollText[(rough + i) % this.scrollText.length], i * this.charWidth - smooth, y, this.charWidth, this.charWidth);
     }
 
 };
