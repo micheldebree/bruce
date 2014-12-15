@@ -46,11 +46,12 @@ window.onload = function () {
     canvas.height = window.innerHeight;
     context = canvas.getContext('2d');
    
-    animations.push(new C64(context));
+    //animations.push(new C64(context));
     //animations.push(new Body(context, motion, 'images/xray/'));
-    animations.push(new Scroller(context));
+    //animations.push(new Scroller(context));
     //animations.push(new Rasterbars(context));
     //animations.push(new Stretcher(context));
-    //animations.push(new Framerate(context));
+    animations.push(new Framerate(context));
+    animations.push(new Snow(context));
     window.requestAnimFrame(animate);
 };
