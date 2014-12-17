@@ -1,6 +1,6 @@
 function Vic(context) {
+    'use strict';
     
-  
     this.borderSize = 50;
     this.screenSize = 320 + 2 * this.borderSize;
    
@@ -28,7 +28,7 @@ function Vic(context) {
 } 
 
 Vic.prototype.draw = function() {
-    
+    'use strict';
    
     
 };

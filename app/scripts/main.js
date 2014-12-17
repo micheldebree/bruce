@@ -1,4 +1,4 @@
-/* global window, document, Body, Scroller, Framerate, Stretcher, Rasterbars, C64, motion */
+/* global window, document, Snow, Body, Scroller, Framerate, Stretcher, Rasterbars, C64, motion */
 
 var context,
     zoomX,

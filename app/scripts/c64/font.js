@@ -1,5 +1,6 @@
 function Font(filename) {
-
+    'use strict';
+    
     this.charwidth = 8;
     this.charheight = 8;
     this.cols = 32;
@@ -9,6 +10,7 @@ function Font(filename) {
 }
 
 Font.prototype.draw = function (context, character, x, y, w, h) {
+    'use strict';
 
     var code = 1 + character.charCodeAt(0) - 'a'.charCodeAt(0),
         clipX = this.charwidth * ~~(code % this.cols),

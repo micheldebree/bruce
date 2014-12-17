@@ -1,13 +1,11 @@
 /* jslint bitwise: true */
 /* exported PeptoPalette */
 function PeptoPalette() {
-
     'use strict';
-
-   
 
 }
 
-Peptopalette.random = function () {
+PeptoPalette.random = function () {
+    'use strict';
     return this.colors[~~(Math.random() * 16)];
 };
