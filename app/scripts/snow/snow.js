@@ -3,7 +3,7 @@ function Snow(context) {
     this.context = context;
     this.flakes = [];
     this.img = new Image();
-    this.img.src = 'scripts/snow/flake.png';
+    this.img.src = 'images/flake.png';
     this.border = 80; // virtual space outside of screen
     this.gravity = 1 / 500; // falling speed
     this.maxwind = 20000; // maximum wind power
