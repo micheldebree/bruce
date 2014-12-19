@@ -103,37 +103,11 @@ function stackBlurImage( imageID, canvasID, radius, blurAlphaChannel )
 }
 
 
-function stackBlurCanvasRGBA( id, top_x, top_y, width, height, radius )
+function stackBlurCanvasRGBA( imageData, top_x, top_y, width, height, radius )
 {
 	if ( isNaN(radius) || radius < 1 ) return;
 	radius |= 0;
-	
-	var canvas  = document.getElementById( id );
-	var context = canvas.getContext("2d");
-	var imageData;
-	
-	try {
-	  try {
-		imageData = context.getImageData( top_x, top_y, width, height );
-	  } catch(e) {
-	  
-		// NOTE: this part is supposedly only needed if you want to work with local files
-		// so it might be okay to remove the whole try/catch block and just use
-		// imageData = context.getImageData( top_x, top_y, width, height );
-		try {
-			netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-			imageData = context.getImageData( top_x, top_y, width, height );
-		} catch(e) {
-			alert("Cannot access local image");
-			throw new Error("unable to access local image data: " + e);
-			return;
-		}
-	  }
-	} catch(e) {
-	  alert("Cannot access image");
-	  throw new Error("unable to access image data: " + e);
-	}
-			
+
 	var pixels = imageData.data;
 			
 	var x, y, i, p, yp, yi, yw, r_sum, g_sum, b_sum, a_sum, 
@@ -211,7 +185,7 @@ function stackBlurCanvasRGBA( id, top_x, top_y, width, height, radius )
 		for ( x = 0; x < width; x++ )
 		{
 			pixels[yi+3] = pa = (a_sum * mul_sum) >> shg_sum;
-			if ( pa != 0 )
+			if ( pa !== 0 )
 			{
 				pa = 255 / pa;
 				pixels[yi]   = ((r_sum * mul_sum) >> shg_sum) * pa;
@@ -364,43 +338,15 @@ function stackBlurCanvasRGBA( id, top_x, top_y, width, height, radius )
 			yi += width;
 		}
 	}
-	
-	context.putImageData( imageData, top_x, top_y );
-	
+
 }
 
-
-function stackBlurCanvasRGB( id, top_x, top_y, width, height, radius )
+// img = imageData
+function stackBlurCanvasRGB( imageData, top_x, top_y, width, height, radius )
 {
 	if ( isNaN(radius) || radius < 1 ) return;
 	radius |= 0;
-	
-	var canvas  = document.getElementById( id );
-	var context = canvas.getContext("2d");
-	var imageData;
-	
-	try {
-	  try {
-		imageData = context.getImageData( top_x, top_y, width, height );
-	  } catch(e) {
-	  
-		// NOTE: this part is supposedly only needed if you want to work with local files
-		// so it might be okay to remove the whole try/catch block and just use
-		// imageData = context.getImageData( top_x, top_y, width, height );
-		try {
-			netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-			imageData = context.getImageData( top_x, top_y, width, height );
-		} catch(e) {
-			alert("Cannot access local image");
-			throw new Error("unable to access local image data: " + e);
-			return;
-		}
-	  }
-	} catch(e) {
-	  alert("Cannot access image");
-	  throw new Error("unable to access image data: " + e);
-	}
-			
+
 	var pixels = imageData.data;
 			
 	var x, y, i, p, yp, yi, yw, r_sum, g_sum, b_sum,
@@ -596,9 +542,7 @@ function stackBlurCanvasRGB( id, top_x, top_y, width, height, radius )
 			yi += width;
 		}
 	}
-	
-	context.putImageData( imageData, top_x, top_y );
-	
+
 }
 
 function BlurStack()

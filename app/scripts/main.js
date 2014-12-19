@@ -51,7 +51,9 @@ window.onload = function () {
     //animations.push(new Scroller(context));
     //animations.push(new Rasterbars(context));
     //animations.push(new Stretcher(context));
-    animations.push(new Framerate(context));
-    animations.push(new Snow(context));
+    //animations.push(new Framerate(context));
+    animations.push(new Snow(context, 'merry', 100));
+    animations.push(new Snow(context, 'christmas', 500));
+    animations.push(new Snow(context, '', 0));
     window.requestAnimFrame(animate);
 };

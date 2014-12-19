@@ -1,3 +1,4 @@
+/* exported Memory */ 
 function Memory() {
     'use strict';
     this.address = [];

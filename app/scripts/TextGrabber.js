@@ -2,26 +2,35 @@
  * Grabs image data from an image.
  * The getData function returns undefined while the image is not loaded yet.
  */
-/* exported PixelGrabber */
-function PixelGrabber(src) {
+/* exported TextGrabber */
+function TextGrabber(txt, h) {
 
     'use strict';
 
-    var imageData,
-        img = new Image();
+    if (h === undefined) {
+        h = 200;
+    }
 
-    img.src = src;
-    img.onload = function () {
+    var canvas = document.createElement('canvas'),
+        context = canvas.getContext('2d');
+       
+    
+    context.font = h + 'px sans-serif';
+    var w = context.measureText(txt).width;
 
-        var canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    context.font = h + 'px sans-serif';
+    context.fillStyle = '#000000';
+    context.textBaseline = 'top';
+    context.fillText(txt, 0, 0);
 
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var context = canvas.getContext('2d');
-        context.drawImage(img, 0, 0);
+    var imageData;
+    
+    if (w > 0 && h > 0) {
+        imageData = context.getImageData(0, 0, w, h);
+    }
 
-        imageData = context.getImageData(0, 0, img.width, img.height);
-    };
 
     this.getData = function () {
         return imageData;
