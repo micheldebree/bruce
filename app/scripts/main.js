@@ -53,7 +53,7 @@ window.onload = function () {
     //animations.push(new Stretcher(context));
     //animations.push(new Framerate(context));
     animations.push(new Snow(context, 'merry', 100));
-    animations.push(new Snow(context, 'christmas', 500));
-    animations.push(new Snow(context, '', 0));
+    //animations.push(new Snow(context, 'christmas', 500));
+    //animations.push(new Snow(context, '', 0));
     window.requestAnimFrame(animate);
 };

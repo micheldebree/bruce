@@ -21,7 +21,7 @@ function TextGrabber(txt, h) {
     canvas.width = w;
     canvas.height = h;
     context.font = h + 'px sans-serif';
-    context.fillStyle = '#000000';
+    context.fillStyle = '#900000';
     context.textBaseline = 'top';
     context.fillText(txt, 0, 0);
 
