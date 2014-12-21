@@ -53,20 +53,21 @@ Snow.prototype.draw = function (playhead) {
         this.context.drawImage(this.img, 0, 0);
         this.context.restore();
 
-        this.dropFlake(x, y);
+        this.dropFlake(x, y, wind);
 
     }
 
 };
 
-Snow.prototype.dropFlake = function (x, y) {
+Snow.prototype.dropFlake = function (x, y, wind) {
     'use strict';
-    
+
     if (this.grabber.isReady()) {
 
-        var gx = x ,
+        var gx = x,
             gy = y;
 
+        // falling on top
         if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) && this.isOpaque(this.grabber.getPixel(gx, gy + 1))) {
 
             if (!this.isOpaque(this.grabber.getPixel(gx - 1, gy)) || !this.isOpaque(this.grabber.getPixel(gx + 1, gy))) {
@@ -77,6 +78,31 @@ Snow.prototype.dropFlake = function (x, y) {
                 this.grabber.setPixel(gx, gy - 1, this.flake);
             }
         }
+
+        if (wind > 0) {
+
+            if (!this.isOpaque(this.grabber.getPixel(gx - 1, gy)) && this.isOpaque(this.grabber.getPixel(gx + 1, gy))) {
+                if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) || !this.isOpaque(this.grabber.getPixel(gy + 1))) {
+                    this.grabber.setPixel(gx, gy - 1, this.flake);
+                    this.grabber.setPixel(gx, gy + 1, this.flake);
+                }
+                else {
+                    this.grabber.setPixel(gx, gy - 1, this.flake);
+                }
+            }
+        }
+        else {
+            if (!this.isOpaque(this.grabber.getPixel(gx + 1, gy)) && this.isOpaque(this.grabber.getPixel(gx - 1, gy))) {
+                if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) || !this.isOpaque(this.grabber.getPixel(gy + 1))) {
+                    this.grabber.setPixel(gx, gy - 1, this.flake);
+                    this.grabber.setPixel(gx, gy + 1, this.flake);
+                }
+                else {
+                    this.grabber.setPixel(gx, gy - 1, this.flake);
+                }
+            }
+        }
+
     }
 };
 

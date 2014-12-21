@@ -27,7 +27,7 @@ function animate(timestamp) {
 function centerText(context, txt, y, h) {
     'use strict';
     context.font = context.canvas.height * (h / 100) + 'px sans-serif';
-    context.fillStyle = '#900000';
+    context.fillStyle = '#000000';
     context.textBaseline = 'top';
     context.fillText(txt, (context.canvas.width - context.measureText(txt).width) / 2, context.canvas.height * (y / 100));
 }
