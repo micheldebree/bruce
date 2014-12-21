@@ -1,5 +1,4 @@
-/* global TextGrabber, PixelGrabber */
-function Snow(context, txt, y) {
+function Snow(context, grabber) {
     'use strict';
     this.context = context;
     this.flakes = [];
@@ -28,10 +27,7 @@ function Snow(context, txt, y) {
         });
     }
 
-    // grab the image
-    this.grabber = new TextGrabber(txt);
-    this.txtX = (context.canvas.width - this.grabber.getWidth()) / 2;
-    this.txtY = y;
+    this.grabber = grabber;
 
 }
 
@@ -40,7 +36,7 @@ Snow.prototype.draw = function (playhead) {
 
     if (this.grabber.isReady()) {
         var data = this.grabber.getData();
-        this.context.putImageData(data, this.txtX, this.txtY);
+        this.context.putImageData(data, 0, 0);
     }
 
     var i, x, y, wind;
@@ -68,8 +64,8 @@ Snow.prototype.dropFlake = function (x, y) {
     
     if (this.grabber.isReady()) {
 
-        var gx = x - this.txtX,
-            gy = y - this.txtY;
+        var gx = x ,
+            gy = y;
 
         if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) && this.isOpaque(this.grabber.getPixel(gx, gy + 1))) {
 

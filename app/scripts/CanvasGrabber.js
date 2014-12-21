@@ -1,26 +1,16 @@
 /**
- * Grabs image data from an image.
+ * Grabs image data from a canvas.
  * The getData function returns undefined while the image is not loaded yet.
  */
-/* exported PixelGrabber */
-function PixelGrabber(src) {
+/* exported CanvasGrabber */
+function CanvasGrabber(context) {
 
     'use strict';
 
-    var imageData,
-        img = new Image();
-
-    img.src = src;
-    img.onload = function () {
-
-        var canvas = document.createElement('canvas');
-
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var context = canvas.getContext('2d');
-        context.drawImage(img, 0, 0);
-
-        imageData = context.getImageData(0, 0, img.width, img.height);
+    var imageData;
+  
+    this.grab = function () {
+        imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.width);
     };
 
     this.getData = function () {
@@ -37,6 +27,16 @@ function PixelGrabber(src) {
 
     this.getHeight = function () {
         return this.isReady() ? imageData.height : 0;
+    };
+
+    this.drawImage = function (src, x, y) {
+
+        var img = new Image();
+        img.src = src;
+        img.onload = function () {
+            context.drawImage(img, x, y);
+            imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.width);
+        };
     };
 
     // returns pixel as 4 byte array [red, green, blue, alpha]
