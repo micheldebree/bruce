@@ -24,14 +24,9 @@ function animate(timestamp) {
     window.requestAnimFrame(animate);
 }
 
-function centerText(context, txt, y, h) {
-    'use strict';
-    context.font = context.canvas.height * (h / 100) + 'px sans-serif';
-    context.fillStyle = '#000000';
-    context.textBaseline = 'top';
-    context.fillText(txt, (context.canvas.width - context.measureText(txt).width) / 2, context.canvas.height * (y / 100));
-}
-
+/**
+ * Draw the scene that will be snowed upon.
+ */
 function drawScene(canvas, message) {
     'use strict';
     var tmpCanvas = document.createElement('canvas');
@@ -39,13 +34,12 @@ function drawScene(canvas, message) {
     tmpCanvas.width = canvas.width;
     tmpCanvas.height = canvas.height;
     var tmpcontext = tmpCanvas.getContext('2d');
-    centerText(tmpcontext, 'Merry', 10, 20);
-    centerText(tmpcontext, 'Christmas', 30, 20);
-
-    centerText(tmpcontext, message.name, 60, 20);
-
+   
     var grabber = new CanvasGrabber(tmpcontext);
 
+    grabber.drawText(tmpcontext, 'Merry', 10, 20);
+    grabber.drawText(tmpcontext, 'Christmas', 30, 20);
+    grabber.drawText(tmpcontext, message.name, 60, 20);
     //grabber.drawImage('images/flake.png', 0, 0);
 
     grabber.grab();
@@ -66,16 +60,18 @@ window.requestAnimFrame = (function () {
 
 window.onload = function () {
     'use strict';
-    var canvas = document.getElementById('Canvas0');
-    zoomX = window.innerWidth / canvas.width;
 
+    // TODO: scale canvas by CSS for performance reasons?
+    var canvas = document.getElementById('Canvas0');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     context = canvas.getContext('2d');
 
+    zoomX = window.innerWidth / canvas.width;
+
+    // get the message according to url parameter
     var friend = ArgumentGrabber.grabArgument('f'),
         message = messages[friend];
-
     if (message === undefined) {
         message = {
             'name': 'hacker',
@@ -83,13 +79,7 @@ window.onload = function () {
         };
     }
 
-    var grabber = drawScene(canvas, message);
-
-    animations.push(new Snow(context, grabber));
-    //animations.push(new Scroller(context));
+    animations.push(new Snow(context, drawScene(canvas, message)));
 
     window.requestAnimFrame(animate);
 };
-
-
-

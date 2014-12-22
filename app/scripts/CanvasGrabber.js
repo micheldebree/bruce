@@ -3,12 +3,13 @@
  * The getData function returns undefined while the image is not loaded yet.
  */
 /* exported CanvasGrabber */
+/* global WebFont */
 function CanvasGrabber(context) {
 
     'use strict';
 
     var imageData;
-  
+
     this.grab = function () {
         imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.width);
     };
@@ -33,11 +34,45 @@ function CanvasGrabber(context) {
 
         var img = new Image();
         img.src = src;
+
+        // the image can be drawn once it has finished loading
         img.onload = function () {
             context.drawImage(img, x, y);
+
+            // grab the data again when the image has been drawn
             imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.width);
         };
     };
+
+    /**
+     * Draw text horizontaly centered
+     * y and h are y-pos and height in percent(!) of canvas height.
+     */
+    this.drawText = function (context, txt, y, h, font) {
+
+        'use strict';
+
+        if (font === undefined) {
+            font = 'Courgette';
+        }
+
+        WebFont.load({
+            google: {
+                families: ['Courgette']
+            },
+            active: function () {
+                context.font = context.canvas.height * (h / 100) + 'px ' + font;
+                context.fillStyle = '#000000';
+                context.textBaseline = 'top';
+                context.fillText(txt, (context.canvas.width - context.measureText(txt).width) / 2, context.canvas.height * (y / 100));
+                // grab the data again when the text has been drawn
+                imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.width);
+            }
+        });
+
+
+    };
+
 
     // returns pixel as 4 byte array [red, green, blue, alpha]
     this.getPixel = function (x, y) {
