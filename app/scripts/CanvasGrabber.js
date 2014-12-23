@@ -50,19 +50,20 @@ function CanvasGrabber(context) {
      */
     this.drawText = function (context, txt, y, h, font) {
 
-        'use strict';
-
         if (font === undefined) {
             font = 'Courgette';
         }
 
+        h = context.canvas.width / txt.length;
+
+        // the text is drawn when the webfont has loaded
         WebFont.load({
             google: {
-                families: ['Courgette']
+                families: [font]
             },
             active: function () {
-                context.font = context.canvas.height * (h / 100) + 'px ' + font;
-                context.fillStyle = '#000000';
+                context.font = h  + 'px ' + font;
+                context.fillStyle = '#ff0000';
                 context.textBaseline = 'top';
                 context.fillText(txt, (context.canvas.width - context.measureText(txt).width) / 2, context.canvas.height * (y / 100));
                 // grab the data again when the text has been drawn
@@ -95,12 +96,18 @@ function CanvasGrabber(context) {
 
     };
 
+    /**
+     * Is a coordinate within range of the image?
+     */
     this.isValid = function (x, y) {
         return x >= 0 && x < imageData.width && y >= 0 && y < imageData.height;
     };
 
+    /**
+     * Get the index in imageData for a coordinate.
+     */
     this.toIndex = function (x, y) {
-        return ~~y * imageData.width * 4 + ~~x * 4;
+        return (~~x + ~~y * imageData.width) << 2;
     };
 
 

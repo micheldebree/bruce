@@ -40,7 +40,7 @@ function drawScene(canvas, message) {
     grabber.drawText(tmpcontext, 'Merry', 10, 20);
     grabber.drawText(tmpcontext, 'Christmas', 30, 20);
     grabber.drawText(tmpcontext, message.name, 60, 20);
-    //grabber.drawImage('images/flake.png', 0, 0);
+    grabber.drawImage('images/tree.png', 0, 0);
 
     grabber.grab();
     return grabber;
@@ -63,6 +63,8 @@ window.onload = function () {
 
     var canvas = document.getElementById('Canvas0');
     context = canvas.getContext('2d');
+    
+    canvas.height = canvas.width * (window.innerHeight / window.innerWidth);
 
     zoomX = window.innerWidth / canvas.width;
 
