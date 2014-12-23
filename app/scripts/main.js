@@ -37,14 +37,18 @@ function drawScene(canvas, message) {
    
     var grabber = new CanvasGrabber(tmpcontext);
 
-    grabber.drawText(tmpcontext, 'Merry', 10, 20);
-    grabber.drawText(tmpcontext, 'Christmas', 30, 20);
-    grabber.drawText(tmpcontext, message.name, 60, 20);
-    grabber.drawImage('images/tree.png', 0, 0);
+    var y = canvas.height / 6;
+    var x = canvas.width / 2;
+    grabber.drawText(tmpcontext, message.name, x, y);
+    grabber.drawText(tmpcontext, message.msg, x, y+40);
+    grabber.drawText(tmpcontext, 'Michel & Hoi-Yin', x, y+80);
+    grabber.drawImage('images/kerstkaart-1plaatje.png', 0, canvas.height - 350);
 
     grabber.grab();
     return grabber;
 }
+
+
 
 window.requestAnimFrame = (function () {
     'use strict';
@@ -73,8 +77,8 @@ window.onload = function () {
         message = messages[friend];
     if (message === undefined) {
         message = {
-            'name': 'hacker',
-            'msg': 'dus'
+            'name': 'Beste relatie,',
+            'msg': 'We wensen U fijne feestdagen!'
         };
     }
 

@@ -3,7 +3,7 @@
  * The getData function returns undefined while the image is not loaded yet.
  */
 /* exported CanvasGrabber */
-/* global WebFont */
+/*global WebFont */
 function CanvasGrabber(context) {
 
     'use strict';
@@ -48,24 +48,20 @@ function CanvasGrabber(context) {
      * Draw text horizontaly centered
      * y and h are y-pos and height in percent(!) of canvas height.
      */
-    this.drawText = function (context, txt, y, h, font) {
+    this.drawText = function (context, txt, x, y) {
 
-        if (font === undefined) {
-            font = 'Courgette';
-        }
-
-        h = context.canvas.width / txt.length;
-
+        var h = context.canvas.height / 30;
+        
         // the text is drawn when the webfont has loaded
         WebFont.load({
             google: {
-                families: [font]
+                families: ['Vollkorn:italic']
             },
             active: function () {
-                context.font = h  + 'px ' + font;
-                context.fillStyle = '#ff0000';
+                context.font = h + 'px Vollkorn';
+                context.fillStyle = '#ffffff';
                 context.textBaseline = 'top';
-                context.fillText(txt, (context.canvas.width - context.measureText(txt).width) / 2, context.canvas.height * (y / 100));
+                context.fillText(txt, x, y);
                 // grab the data again when the text has been drawn
                 imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.width);
             }
@@ -80,8 +76,7 @@ function CanvasGrabber(context) {
         if (this.isValid(x, y)) {
             var i = this.toIndex(x, y);
             return [imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]];
-        }
-        else {
+        } else {
             return [0, 0, 0, 0];
         }
     };
