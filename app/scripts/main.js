@@ -61,10 +61,7 @@ window.requestAnimFrame = (function () {
 window.onload = function () {
     'use strict';
 
-    // TODO: scale canvas by CSS for performance reasons?
     var canvas = document.getElementById('Canvas0');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
     context = canvas.getContext('2d');
 
     zoomX = window.innerWidth / canvas.width;
