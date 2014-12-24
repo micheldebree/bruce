@@ -212,9 +212,9 @@ var messages = {
         
     },
     6581 : {
-        'name' : 'Greetings sceners, ',
+        'name' : 'Greetings Commodore sceners & other nutters, ',
         'msg' : 'I wish you a very bleepy, pixely and opcody 2015!',
-        'signed' : 'Michel de Bree (youtH)',
+        'signed' : 'Michel de Bree (youtH/Heatwave)',
         'img' : 'images/clogo.png'
     }
 

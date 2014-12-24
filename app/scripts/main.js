@@ -17,8 +17,6 @@ function animate(timestamp) {
         animStart = timestamp;
     }
 
-    context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
     for (i = 0; i < animations.length; i++) {
         animations[i].draw(timestamp - animStart);
     }
@@ -31,7 +29,13 @@ function animate(timestamp) {
  */
 function drawScene(canvas, message) {
     'use strict';
-
+    
+    if (message === undefined) {
+        message = {
+            'name': 'Dear friends and family,',
+            'msg': 'We wish you a happy christmas and a blessed 2015!'
+        };
+    }
 
     if (message.msg === undefined) {
         message.msg = 'We wish you a happy christmas and a blessed 2015!';
@@ -56,7 +60,7 @@ function drawScene(canvas, message) {
 
 
     if (message.img !== undefined) {
-        grabber.drawImage(message.img, canvas.width / 6, y);
+        grabber.drawImage(message.img, canvas.width / 6, y-10);
     }
 
     grabber.grab();
@@ -81,19 +85,10 @@ window.onload = function () {
     'use strict';
 
     var canvas = document.getElementById('Canvas0'),
-
-    // get the message according to url parameter
-        friend = ArgumentGrabber.grabArgument('f'),
-        message = messages[friend];
-    if (message === undefined) {
-        message = {
-            'name': 'Dear friends and family,',
-            'msg': 'We wish you a happy christmas and a blessed 2015!'
-        };
-    }
+        friend = ArgumentGrabber.grabArgument('f');
 
     context = canvas.getContext('2d');
-    animations.push(new Snow(context, drawScene(canvas, message)));
+    animations.push(new Snow(context, drawScene(canvas, messages[friend])));
 
     window.requestAnimFrame(animate);
 };

@@ -89,11 +89,13 @@ function CanvasGrabber(context) {
 
     // set pixel value [red, green, blue, alpha]
     this.setPixel = function (x, y, pixel) {
-        var i = this.toIndex(x, y);
-        imageData.data[i] = pixel[0];
-        imageData.data[i + 1] = pixel[1];
-        imageData.data[i + 2] = pixel[2];
-        imageData.data[i + 3] = pixel[3];
+        if (this.isValid(x, y)) {
+            var i = this.toIndex(x, y);
+            imageData.data[i] = pixel[0];
+            imageData.data[i + 1] = pixel[1];
+            imageData.data[i + 2] = pixel[2];
+            imageData.data[i + 3] = pixel[3];
+        }
 
     };
 

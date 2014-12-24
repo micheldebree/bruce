@@ -68,37 +68,38 @@ Snow.prototype.dropFlake = function (x, y, wind) {
 
     if (this.grabber.isReady()) {
 
-        var gx = x,
-            gy = y;
+        var top = this.isOpaque(x, y - 1),
+            bottom = this.isOpaque(x, y + 1),
+            left = this.isOpaque(x - 1, y),
+            right = this.isOpaque(x + 1, y);
 
         // falling on top
-        if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) && this.isOpaque(this.grabber.getPixel(gx, gy + 1))) {
+        if (bottom && !top) {
 
-            if (!this.isOpaque(this.grabber.getPixel(gx - 1, gy)) || !this.isOpaque(this.grabber.getPixel(gx + 1, gy))) {
-                this.grabber.setPixel(gx - 1, gy, this.flake);
-                this.grabber.setPixel(gx + 1, gy, this.flake);
+            if (!left || !right) {
+                this.grabber.setPixel(x - 1, y, this.flake);
+                this.grabber.setPixel(x + 1, y, this.flake);
             } else {
-                this.grabber.setPixel(gx, gy - 1, this.flake);
+                this.grabber.setPixel(x, y - 1, this.flake);
             }
-        }
-
-        if (wind > 0) {
-
-            if (!this.isOpaque(this.grabber.getPixel(gx - 1, gy)) && this.isOpaque(this.grabber.getPixel(gx + 1, gy))) {
-                if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) || !this.isOpaque(this.grabber.getPixel(gy + 1))) {
-                    this.grabber.setPixel(gx, gy - 1, this.flake);
-                    this.grabber.setPixel(gx, gy + 1, this.flake);
+        } else if (wind > 0) {
+            // falling on the left side
+            if (right && !left) {
+                if (!top || !bottom) {
+                    this.grabber.setPixel(x, y - 1, this.flake);
+                    this.grabber.setPixel(x, y + 1, this.flake);
                 } else {
-                    this.grabber.setPixel(gx, gy - 1, this.flake);
+                    this.grabber.setPixel(x - 1, y, this.flake);
                 }
             }
         } else {
-            if (!this.isOpaque(this.grabber.getPixel(gx + 1, gy)) && this.isOpaque(this.grabber.getPixel(gx - 1, gy))) {
-                if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) || !this.isOpaque(this.grabber.getPixel(gy + 1))) {
-                    this.grabber.setPixel(gx, gy - 1, this.flake);
-                    this.grabber.setPixel(gx, gy + 1, this.flake);
+            // falling on the right side
+            if (left && !right) {
+                if (!top || !bottom) {
+                    this.grabber.setPixel(x, y - 1, this.flake);
+                    this.grabber.setPixel(x, y + 1, this.flake);
                 } else {
-                    this.grabber.setPixel(gx, gy - 1, this.flake);
+                    this.grabber.setPixel(x + 1, y, this.flake);
                 }
             }
         }
@@ -106,9 +107,9 @@ Snow.prototype.dropFlake = function (x, y, wind) {
     }
 };
 
-Snow.prototype.isOpaque = function (pixel) {
+Snow.prototype.isOpaque = function (x, y) {
     'use strict';
-    return pixel[3] !== undefined && pixel[3] > 0x80;
+    return  this.grabber.getPixel(x, y)[3] > 0x80;
 };
 
 Snow.prototype.mod = function (arg, div) {
