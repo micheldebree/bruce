@@ -1,15 +1,20 @@
+/*global WebFont, Image */
+/*exported CanvasGrabber */
+/*jslint bitwise: true*/
+/*jslint plusplus: true*/
 /**
  * Grabs image data from a canvas.
  * The getData function returns undefined while the image is not loaded yet.
  */
-/* exported CanvasGrabber */
-/*global WebFont */
 function CanvasGrabber(context) {
 
     'use strict';
 
     var imageData;
 
+    /**
+     * Grab the imagedata from the specified context.
+     */
     this.grab = function () {
         imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.width);
     };
@@ -30,6 +35,9 @@ function CanvasGrabber(context) {
         return this.isReady() ? imageData.height : 0;
     };
 
+    /**
+     * Draw an image at the specified coordinate.
+     */
     this.drawImage = function (src, x, y) {
 
         var img = new Image();
@@ -45,40 +53,38 @@ function CanvasGrabber(context) {
     };
 
     /**
-     * Draw text horizontaly centered
-     * y and h are y-pos and height in percent(!) of canvas height.
+     * Draw text/
      */
     this.drawText = function (context, txt, x, y) {
 
-        var h = context.canvas.height / 30;
-        
+        var i, lines, h = 20;
         // the text is drawn when the webfont has loaded
         WebFont.load({
             google: {
-                families: ['Vollkorn:italic']
+                families: ['Vollkorn']
             },
             active: function () {
                 context.font = h + 'px Vollkorn';
                 context.fillStyle = '#ffffff';
                 context.textBaseline = 'top';
-                context.fillText(txt, x, y);
+                lines = txt.split('*');
+                for (i = 0; i < lines.length; i++) {
+                    context.fillText(lines[i], x, y + i * h);
+                }
+
                 // grab the data again when the text has been drawn
                 imageData = context.getImageData(0, 0, context.canvas.width, context.canvas.width);
             }
         });
-
-
     };
-
 
     // returns pixel as 4 byte array [red, green, blue, alpha]
     this.getPixel = function (x, y) {
         if (this.isValid(x, y)) {
             var i = this.toIndex(x, y);
             return [imageData.data[i], imageData.data[i + 1], imageData.data[i + 2], imageData.data[i + 3]];
-        } else {
-            return [0, 0, 0, 0];
         }
+        return [0, 0, 0, 0];
     };
 
     // set pixel value [red, green, blue, alpha]

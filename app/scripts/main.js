@@ -1,12 +1,14 @@
-/* global ArgumentGrabber, window, document, Snow, CanvasGrabber, messages */
-
+/*global ArgumentGrabber, window, document, Snow, CanvasGrabber, messages */
+/*jslint bitwise: true*/
+/*jslint plusplus: true*/
 var context,
-    zoomX,
     animStart,
     animations = [];
 
 function animate(timestamp) {
     'use strict';
+
+    var i;
 
     // determine the 'playhead': the number of milliseconds the animation
     // has been playing. Use this for timing effects since the Draw function
@@ -17,7 +19,7 @@ function animate(timestamp) {
 
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
-    for (var i = 0; i < animations.length; i++) {
+    for (i = 0; i < animations.length; i++) {
         animations[i].draw(timestamp - animStart);
     }
 
@@ -29,20 +31,33 @@ function animate(timestamp) {
  */
 function drawScene(canvas, message) {
     'use strict';
-    var tmpCanvas = document.createElement('canvas');
 
+
+    if (message.msg === undefined) {
+        message.msg = 'We wish you a happy christmas and a blessed 2015!';
+    }
+    if (message.signed === undefined) {
+        message.signed = 'Michel & Hoi-Yin';
+    }
+
+    var tmpCanvas = document.createElement('canvas');
     tmpCanvas.width = canvas.width;
     tmpCanvas.height = canvas.height;
-    var tmpcontext = tmpCanvas.getContext('2d');
-   
-    var grabber = new CanvasGrabber(tmpcontext);
 
-    var y = canvas.height / 6;
-    var x = canvas.width / 2;
+    var tmpcontext = tmpCanvas.getContext('2d'),
+        grabber = new CanvasGrabber(tmpcontext),
+        y = canvas.height / 4,
+        x = canvas.width / 3;
+
     grabber.drawText(tmpcontext, message.name, x, y);
-    grabber.drawText(tmpcontext, message.msg, x, y+40);
-    grabber.drawText(tmpcontext, 'Michel & Hoi-Yin', x, y+80);
+    grabber.drawText(tmpcontext, message.msg, x, y + 40);
+    grabber.drawText(tmpcontext, message.signed, x, y + 100);
     grabber.drawImage('images/kerstkaart-1plaatje.png', 0, canvas.height - 350);
+
+
+    if (message.img !== undefined) {
+        grabber.drawImage(message.img, canvas.width / 6, y);
+    }
 
     grabber.grab();
     return grabber;
@@ -65,23 +80,19 @@ window.requestAnimFrame = (function () {
 window.onload = function () {
     'use strict';
 
-    var canvas = document.getElementById('Canvas0');
-    context = canvas.getContext('2d');
-    
-    canvas.height = canvas.width * (window.innerHeight / window.innerWidth);
-
-    zoomX = window.innerWidth / canvas.width;
+    var canvas = document.getElementById('Canvas0'),
 
     // get the message according to url parameter
-    var friend = ArgumentGrabber.grabArgument('f'),
+        friend = ArgumentGrabber.grabArgument('f'),
         message = messages[friend];
     if (message === undefined) {
         message = {
-            'name': 'Beste relatie,',
-            'msg': 'We wensen U fijne feestdagen!'
+            'name': 'Dear friends and family,',
+            'msg': 'We wish you a happy christmas and a blessed 2015!'
         };
     }
 
+    context = canvas.getContext('2d');
     animations.push(new Snow(context, drawScene(canvas, message)));
 
     window.requestAnimFrame(animate);

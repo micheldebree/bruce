@@ -1,3 +1,5 @@
+/*global Image*/
+/*jslint plusplus: true*/
 function Snow(context, grabber) {
     'use strict';
     this.context = context;
@@ -14,10 +16,11 @@ function Snow(context, grabber) {
         minSize = 0.015, // min/max flake scale
         maxSize = 0.030,
         minRot = -0.003, // min/max rotation speed
-        maxRot = 0.003;
+        maxRot = 0.003,
+        i;
 
     // create flakes with random properties
-    for (var i = 0; i < nrflakes; i++) {
+    for (i = 0; i < nrflakes; i++) {
         this.flakes.push({
             x: Math.random() * context.canvas.width,
             y: Math.random() * context.canvas.height,
@@ -34,17 +37,18 @@ function Snow(context, grabber) {
 Snow.prototype.draw = function (playhead) {
     'use strict';
 
+    var data, i, x, y, wind;
+
     if (this.grabber.isReady()) {
-        var data = this.grabber.getData();
+        data = this.grabber.getData();
         this.context.putImageData(data, 0, 0);
     }
 
-    var i, x, y, wind;
     for (i = 0; i < this.flakes.length; i++) {
 
         wind = this.maxwind * Math.sin(playhead / this.windchange);
-        x = -this.border + this.mod((this.flakes[i].x + wind * this.flakes[i].siz) + playhead * this.flakes[i].spdx, (this.context.canvas.width + this.border));
-        y = -this.border + this.mod((this.flakes[i].y + playhead / this.flakes[i].siz * this.gravity), (this.context.canvas.height + this.border));
+        x = -this.border + this.mod((this.flakes[i].x + wind * this.flakes[i].siz) + playhead * this.flakes[i].spdx, (this.context.canvas.width + this.border * 2));
+        y = -this.border + this.mod((this.flakes[i].y + playhead / this.flakes[i].siz * this.gravity), (this.context.canvas.height + this.border * 2));
 
         this.context.save();
         this.context.translate(x, y);
@@ -73,8 +77,7 @@ Snow.prototype.dropFlake = function (x, y, wind) {
             if (!this.isOpaque(this.grabber.getPixel(gx - 1, gy)) || !this.isOpaque(this.grabber.getPixel(gx + 1, gy))) {
                 this.grabber.setPixel(gx - 1, gy, this.flake);
                 this.grabber.setPixel(gx + 1, gy, this.flake);
-            }
-            else {
+            } else {
                 this.grabber.setPixel(gx, gy - 1, this.flake);
             }
         }
@@ -85,19 +88,16 @@ Snow.prototype.dropFlake = function (x, y, wind) {
                 if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) || !this.isOpaque(this.grabber.getPixel(gy + 1))) {
                     this.grabber.setPixel(gx, gy - 1, this.flake);
                     this.grabber.setPixel(gx, gy + 1, this.flake);
-                }
-                else {
+                } else {
                     this.grabber.setPixel(gx, gy - 1, this.flake);
                 }
             }
-        }
-        else {
+        } else {
             if (!this.isOpaque(this.grabber.getPixel(gx + 1, gy)) && this.isOpaque(this.grabber.getPixel(gx - 1, gy))) {
                 if (!this.isOpaque(this.grabber.getPixel(gx, gy - 1)) || !this.isOpaque(this.grabber.getPixel(gy + 1))) {
                     this.grabber.setPixel(gx, gy - 1, this.flake);
                     this.grabber.setPixel(gx, gy + 1, this.flake);
-                }
-                else {
+                } else {
                     this.grabber.setPixel(gx, gy - 1, this.flake);
                 }
             }
@@ -108,7 +108,7 @@ Snow.prototype.dropFlake = function (x, y, wind) {
 
 Snow.prototype.isOpaque = function (pixel) {
     'use strict';
-    return pixel[3] !== undefined && pixel[3] > 128;
+    return pixel[3] !== undefined && pixel[3] > 0x80;
 };
 
 Snow.prototype.mod = function (arg, div) {
