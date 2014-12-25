@@ -29,7 +29,7 @@ function animate(timestamp) {
  */
 function drawScene(canvas, message) {
     'use strict';
-    
+
     if (message === undefined) {
         message = {
             'name': 'Dear friends and family,',
@@ -44,14 +44,15 @@ function drawScene(canvas, message) {
         message.signed = 'Michel & Hoi-Yin';
     }
 
-    var tmpCanvas = document.createElement('canvas');
-    tmpCanvas.width = canvas.width;
-    tmpCanvas.height = canvas.height;
-
-    var tmpcontext = tmpCanvas.getContext('2d'),
+    var tmpCanvas = document.createElement('canvas'),
+        tmpcontext = tmpCanvas.getContext('2d'),
         grabber = new CanvasGrabber(tmpcontext),
         y = canvas.height / 4,
         x = canvas.width / 3;
+    
+    tmpCanvas.width = canvas.width;
+    tmpCanvas.height = canvas.height;
+
 
     grabber.drawText(tmpcontext, message.name, x, y);
     grabber.drawText(tmpcontext, message.msg, x, y + 40);
@@ -60,7 +61,7 @@ function drawScene(canvas, message) {
 
 
     if (message.img !== undefined) {
-        grabber.drawImage(message.img, canvas.width / 6, y-10);
+        grabber.drawImage(message.img, canvas.width / 6, y - 10);
     }
 
     grabber.grab();

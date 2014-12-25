@@ -109,7 +109,7 @@ Snow.prototype.dropFlake = function (x, y, wind) {
 
 Snow.prototype.isOpaque = function (x, y) {
     'use strict';
-    return  this.grabber.getPixel(x, y)[3] > 0x80;
+    return this.grabber.getPixel(x, y)[3] > 0x80;
 };
 
 Snow.prototype.mod = function (arg, div) {

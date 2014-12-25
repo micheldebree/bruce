@@ -127,7 +127,7 @@ var messages = {
     1730 : {
         'name' : 'Sarah, Peter, Adele and Sebastian ',
         'msg' : 'Een mooie kerst en een gezegend 2015'
-    },	
+    },
     5028 : {
         'name' : '鴻儒 & 小孟',
         'msg' : '祝你們聖誕節快樂, 新年快樂! 也祝你們節日快樂!'
@@ -209,7 +209,6 @@ var messages = {
         'msg' : 'Ik wens u een fijne kerst en een mooi 2015!',
         'signed' : 'Michel de Bree',
         'img' : 'images/M500.png'
-        
     },
     6581 : {
         'name' : 'Greetings Commodore sceners & other nutters, ',
@@ -220,19 +219,3 @@ var messages = {
 
 
 };
-
-/* Link: 
-https://dl.dropboxusercontent.com/u/132146/site/xmas/index.html?f=6793 
-*/
-
-/* 	
-3812	4258	3425
-9131	1625	1949	1805	8742
-7147	7056	9079	6337	4610
-5444	6124	3167	6815	2172
-4338	6416	5289	9865	6839
-6175	7346	7787	1337	8834
-5697	9485	3323	7757	3447
-9304	9143	8614	7412	5333
-7864	5067	4880	8524	4872
-4304	9392	1897	6098	2508 */
