@@ -49,7 +49,7 @@ function drawScene(canvas, message) {
         grabber = new CanvasGrabber(tmpcontext),
         y = canvas.height / 4,
         x = canvas.width / 3;
-    
+
     tmpCanvas.width = canvas.width;
     tmpCanvas.height = canvas.height;
 
@@ -67,8 +67,6 @@ function drawScene(canvas, message) {
     grabber.grab();
     return grabber;
 }
-
-
 
 window.requestAnimFrame = (function () {
     'use strict';

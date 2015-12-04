@@ -1,0 +1,17 @@
+{
+  "env": {
+    "browser": 1
+  },
+
+  "globals": {
+    "angular": 1
+  },
+
+  "rules": {
+    "quotes": [2, "single"],
+    semi: [2, "always"],
+    strict: [2, "function"],
+    "camelcase": [2, {"properties": "always"}]
+  },
+
+}

@@ -10,7 +10,7 @@ function ArgumentGrabber() {
 
 /**
  * Grab the argument specified by key.
- * @param {string} key - the key for the argument. 
+ * @param {string} key - the key for the argument.
  */
 ArgumentGrabber.grabArgument = function (key) {
     'use strict';

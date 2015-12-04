@@ -2,6 +2,6 @@
   "name": "workspace",
   "private": true,
   "dependencies": {
-    "components-webfontloader": "~1.5.2"
+    "components-webfontloader": "~1.6.3"
   }
 }
