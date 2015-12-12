@@ -26,7 +26,8 @@ function Snow(context, grabber) {
             y: Math.random() * context.canvas.height,
             spdx: -0.05 + Math.random() * 0.1,
             siz: minSize + Math.random() * (maxSize - minSize),
-            rot: minRot + Math.random() * (maxRot - minRot)
+            rot: minRot + Math.random() * (maxRot - minRot),
+            alpha: Math.random()
         });
     }
 
@@ -54,6 +55,7 @@ Snow.prototype.draw = function (playhead) {
         this.context.translate(x, y);
         this.context.rotate(playhead * this.flakes[i].rot);
         this.context.scale(this.flakes[i].siz, this.flakes[i].siz);
+        this.context.globalAlpha = this.flakes[i].alpha
         this.context.drawImage(this.img, 0, 0);
         this.context.restore();
 

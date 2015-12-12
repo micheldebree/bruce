@@ -41,7 +41,7 @@ function drawScene(canvas, message) {
         message.msg = 'We wish you a happy christmas and a blessed 2015!';
     }
     if (message.signed === undefined) {
-        message.signed = 'Michel & Hoi-Yin';
+        message.signed = 'Michel, Hoi-Yin & Zeng Xuan';
     }
 
     var tmpCanvas = document.createElement('canvas'),
@@ -57,7 +57,7 @@ function drawScene(canvas, message) {
     grabber.drawText(tmpcontext, message.name, x, y);
     grabber.drawText(tmpcontext, message.msg, x, y + 40);
     grabber.drawText(tmpcontext, message.signed, x, y + 100);
-    grabber.drawImage('images/kerstkaart-1plaatje.png', 0, canvas.height - 350);
+    grabber.drawImage('images/Snowcutout.png', 0, canvas.height - 576);
 
 
     if (message.img !== undefined) {
